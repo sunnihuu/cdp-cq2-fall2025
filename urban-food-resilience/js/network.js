@@ -3,17 +3,17 @@
 // Data structure for the eleven pages
 const data = {
   nodes: [
-    { id: "node1", group: 1, label: "Node 1", url: "#" },
-    { id: "node2", group: 2, label: "Node 2", url: "#" },
-    { id: "node3", group: 3, label: "Node 3", url: "#" },
-    { id: "node4", group: 4, label: "Node 4", url: "#" },
-    { id: "node5", group: 5, label: "Node 5", url: "#" },
-    { id: "node6", group: 6, label: "Node 6", url: "#" },
-    { id: "node7", group: 7, label: "Node 7", url: "#" },
-    { id: "node8", group: 8, label: "Node 8", url: "#" },
-    { id: "node9", group: 9, label: "Node 9", url: "#" },
-    { id: "node10", group: 10, label: "Node 10", url: "#" },
-    { id: "node11", group: 11, label: "Node 11", url: "#" }
+    { id: "node1", group: 1, label: "🍎", url: "#" },
+    { id: "node2", group: 2, label: "🍌", url: "#" },
+    { id: "node3", group: 3, label: "🥪", url: "#" },
+    { id: "node4", group: 4, label: "🍞", url: "#" },
+    { id: "node5", group: 5, label: "🧀", url: "#" },
+    { id: "node6", group: 6, label: "🍇", url: "#" },
+    { id: "node7", group: 7, label: "🍓", url: "#" },
+    { id: "node8", group: 8, label: "🍊", url: "#" },
+    { id: "node9", group: 9, label: "🍉", url: "#" },
+    { id: "node10", group: 10, label: "🍍", url: "#" },
+    { id: "node11", group: 11, label: "🥑", url: "#" }
   ],
   links: [
     { source: "node1", target: "node2", value: 1 },
@@ -89,12 +89,23 @@ function createNetwork() {
     })
     .style("cursor", "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><circle cx=\"16\" cy=\"16\" r=\"8\" fill=\"%237cb342\" opacity=\"0.6\"/></svg>') 16 16, pointer");
 
-  // Add circles to nodes (no numbers)
+  // Add an invisible hit area to make dragging easy
   nodeGroup.append("circle")
-    .attr("r", 28)
-    .attr("fill", d => color(d.group))
-    .attr("stroke", "#ffffff")
-    .attr("stroke-width", 3);
+    .attr("r", 34)
+    .attr("fill", "transparent")
+    .attr("stroke", "none")
+    .style("pointer-events", "all");
+
+  // Add emoji labels centered at node positions
+  nodeGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("dy", "0.35em")
+    .style("font-size", "48px")
+    .style("user-select", "none")
+    .style("pointer-events", "auto")
+    .style("font-family", '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif')
+    .style("transition", "transform 250ms ease")
+    .text(d => d.label);
 
   // Create cursor label element
   const cursorLabel = d3.select("body").append("div")
@@ -112,33 +123,14 @@ function createNetwork() {
     .style("-webkit-text-stroke", "2px white")
     .style("paint-order", "stroke fill");
 
-  // Add breathing animation to circles
-  function breatheAnimation() {
-    nodeGroup.selectAll("circle")
-      .transition()
-      .duration(2500)
-      .ease(d3.easeSinInOut)
-      .attr("r", 32)
-      .transition()
-      .duration(2500)
-      .ease(d3.easeSinInOut)
-      .attr("r", 28)
-      .on("end", breatheAnimation);
-  }
-  
-  // Start breathing animation after initial settlement
-  setTimeout(breatheAnimation, 1000);
+  // No breathing animation when using only emojis
 
   // Add hover effects with bigger size
   nodeGroup
     .on("mouseenter", function(event, d) {
-      d3.select(this).select("circle")
-        .interrupt()
-        .transition()
-        .duration(800)
-        .ease(d3.easeQuadOut)
-        .attr("r", 45);
-      
+      // Enlarge emoji on hover
+      d3.select(this).select("text")
+        .style("transform", "scale(1.35)");
       // Show cursor label
       cursorLabel
         .text(d.label)
@@ -151,12 +143,9 @@ function createNetwork() {
         .style("top", (event.pageY + 15) + "px");
     })
     .on("mouseleave", function(event, d) {
-      d3.select(this).select("circle")
-        .transition()
-        .duration(600)
-        .ease(d3.easeQuadOut)
-        .attr("r", 28);
-      
+      // Restore emoji size
+      d3.select(this).select("text")
+        .style("transform", "scale(1)");
       // Hide cursor label
       cursorLabel
         .style("opacity", "0");
@@ -180,11 +169,7 @@ function createNetwork() {
     event.subject.fx = event.subject.x;
     event.subject.fy = event.subject.y;
     
-    // Make dragged circle bigger
-    d3.select(event.sourceEvent.target.parentNode).select("circle")
-      .transition()
-      .duration(200)
-      .attr("r", 50);
+    // No circle to resize
   }
 
   function dragged(event) {
@@ -198,12 +183,7 @@ function createNetwork() {
     event.subject.fx = null;
     event.subject.fy = null;
     
-    // Return circle to normal size
-    d3.select(event.sourceEvent.target.parentNode).select("circle")
-      .transition()
-      .duration(300)
-      .ease(d3.easeElastic)
-      .attr("r", 28);
+    // No circle to resize
   }
 
   // Handle window resize
