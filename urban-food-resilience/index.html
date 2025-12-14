@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Urban Food Resilience Atlas</title>
+  <title>Low-Carbon Food Resilience in NYC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
 </head>
 
 <body class="home">
-  <!-- Background interactive layer -->
-  <canvas id="bg"></canvas>
+  <!-- p5.js sketch will render here -->
+  <div id="p5-container"></div>
 
   <main class="home-shell" aria-label="Homepage">
     <!-- Header: Title top-left -->
     <header class="header">
       <h1 class="title">
-        Low-Carbon Food<br>Resilience in<br>New York City
+        Low-Carbon Food<br>Resilience in NYC
       </h1>
       <p class="subtitle">What if everyday eating could become a visible and actionable lever for urban climate resilience?</p>
     </header>
@@ -46,14 +47,13 @@
       <button class="control-btn" data-target="precedents.html" aria-label="Precedents"></button>
       <button class="control-btn" data-target="proof.html" aria-label="Proof of Concept"></button>
     </div>
-
     <!-- Motion toggle -->
     <div class="motion-toggle-wrapper">
       <button id="motionToggle" class="ghost-btn" type="button">Reduce Motion</button>
     </div>
   </main>
 
-  <script src="js/main.js"></script>
+  <script src="js/p5-sketch.js"></script>
   <script src="js/page.js"></script>
 </body>
 </html>
