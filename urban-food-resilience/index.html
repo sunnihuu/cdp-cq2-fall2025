@@ -8,12 +8,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 
 <body class="home">
-  <!-- p5.js sketch will render here -->
-  <div id="p5-container"></div>
+  <!-- Three.js background container -->
+  <div id="three-container"></div>
 
   <main class="home-shell" aria-label="Homepage">
     <!-- Header: Title top-left -->
@@ -39,21 +47,17 @@
       <p class="info-text">CQ 2 Fall 2025</p>
     </footer>
 
-    <!-- Center: Interactive buttons circle -->
-    <div class="center-controls">
-      <button class="control-btn" data-target="project.html" aria-label="Project Description"></button>
-      <button class="control-btn" data-target="computation.html" aria-label="Computational Methods"></button>
-      <button class="control-btn" data-target="design.html" aria-label="Design Methods"></button>
-      <button class="control-btn" data-target="precedents.html" aria-label="Precedents"></button>
-      <button class="control-btn" data-target="proof.html" aria-label="Proof of Concept"></button>
-    </div>
+    <!-- Center: Interactive D3 Network -->
+    <div id="network-container" class="center-controls"></div>
+    
     <!-- Motion toggle -->
     <div class="motion-toggle-wrapper">
       <button id="motionToggle" class="ghost-btn" type="button">Reduce Motion</button>
     </div>
   </main>
 
-  <script src="js/p5-sketch.js"></script>
+  <script type="module" src="js/three-background.js"></script>
+  <script src="js/network.js"></script>
   <script src="js/page.js"></script>
 </body>
 </html>
