@@ -1,64 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design - Urban Food Resilience Atlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Design Methods - Urban Food Resilience Atlas</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/page.css" />
 </head>
 
 <body>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <h1 class="nav-title">Urban Food Resilience Atlas</h1>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="project.html">Project</a></li>
-        <li><a href="computation.html">Computation</a></li>
-        <li><a href="design.html" class="active">Design</a></li>
-        <li><a href="precedents.html">Precedents</a></li>
-        <li><a href="proof.html">Proof</a></li>
-        <li><a href="presentation.html">Presentation</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <header class="site-header">
-    <h1>Design Interventions</h1>
-    <p class="hypothesis">Architectural and urban design responses to food system challenges</p>
+  <header class="page-top">
+    <a class="back" href="index.html">← Home</a>
+    <h1>Design Methods</h1>
+    <p class="sub">Interventions, prototypes, and implementation strategies.</p>
   </header>
 
-  <main>
-    <section>
+  <aside class="toc" aria-label="Table of contents">
+    <a href="#agriculture">Urban Agriculture</a>
+    <a href="#networks">Food Networks</a>
+    <a href="#infrastructure">Infrastructure</a>
+  </aside>
+
+  <main class="page">
+    <section id="agriculture" class="block reveal">
       <h2>Urban Agriculture Integration</h2>
-      <p>Strategic placement of community gardens, rooftop farms, and vertical growing systems in underserved neighborhoods to increase local food production and create economic opportunities.</p>
+      <p>Strategic placement of community gardens, rooftop farms, and vertical growing systems in underserved neighborhoods to increase local food production and create economic opportunities. Design interventions adapt to existing urban conditions, regulatory constraints, and community needs.</p>
     </section>
 
-    <section>
-      <h2>Food Hub Networks</h2>
-      <p>Development of distributed food processing and distribution nodes that connect urban producers, existing markets, and consumers while reducing transportation emissions and increasing system resilience.</p>
+    <section id="networks" class="block reveal">
+      <h2>Distributed Food Networks</h2>
+      <p>Development of distributed food processing and distribution nodes connecting urban producers, existing markets, and consumers while reducing transportation emissions. Prototype nodes demonstrate feasibility at neighborhood scale with potential for citywide expansion.</p>
     </section>
 
-    <section>
+    <section id="infrastructure" class="block reveal">
       <h2>Infrastructure for Change</h2>
       <ul>
-        <li>Adaptive reuse of underutilized urban land</li>
-        <li>Cold storage and processing facilities in food deserts</li>
-        <li>Micro-mobility solutions for food distribution</li>
+        <li>Adaptive reuse of underutilized urban land for food production</li>
+        <li>Cold storage and processing facilities in identified food deserts</li>
+        <li>Micro-mobility solutions for last-mile food distribution</li>
         <li>Community education and skill-building programs</li>
+        <li>Policy frameworks and implementation roadmaps</li>
       </ul>
     </section>
 
-    <section>
-      <h2>Implementation Strategy</h2>
-      <p>Design interventions scaled at neighborhood level with expansion to citywide impact. Economic models and feasibility studies inform implementation roadmaps.</p>
-    </section>
+    <button id="toTop" class="to-top" type="button">↑ Top</button>
   </main>
-
-  <footer class="footer">
-    <p>&copy; 2025 Urban Food Resilience Atlas. A thesis research project.</p>
-  </footer>
 
   <script src="js/main.js"></script>
   <script src="js/page.js"></script>

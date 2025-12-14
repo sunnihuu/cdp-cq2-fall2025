@@ -1,64 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation - Urban Food Resilience Atlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Computational Methods - Urban Food Resilience Atlas</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/page.css" />
 </head>
 
 <body>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <h1 class="nav-title">Urban Food Resilience Atlas</h1>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="project.html">Project</a></li>
-        <li><a href="computation.html" class="active">Computation</a></li>
-        <li><a href="design.html">Design</a></li>
-        <li><a href="precedents.html">Precedents</a></li>
-        <li><a href="proof.html">Proof</a></li>
-        <li><a href="presentation.html">Presentation</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <header class="site-header">
-    <h1>Computation</h1>
-    <p class="hypothesis">Data analysis and spatial computation methods</p>
+  <header class="page-top">
+    <a class="back" href="index.html">← Home</a>
+    <h1>Computational Methods</h1>
+    <p class="sub">Data analysis, mapping, and spatial computation.</p>
   </header>
 
-  <main>
-    <section>
+  <aside class="toc" aria-label="Table of contents">
+    <a href="#spatial">Spatial Analysis</a>
+    <a href="#data">Data Sources</a>
+    <a href="#modeling">Modeling</a>
+  </aside>
+
+  <main class="page">
+    <section id="spatial" class="block reveal">
       <h2>Spatial Analysis</h2>
-      <p>Geographic Information Systems (GIS) mapping techniques employed to visualize food distribution networks, urban agriculture sites, and areas of food vulnerability across New York City.</p>
-      <figure>
-        <div class="placeholder">[ Analysis Map ]</div>
-        <figcaption>Figure: Computational spatial analysis results</figcaption>
-      </figure>
+      <p>Geographic Information Systems (GIS) mapping techniques visualize food distribution networks, urban agriculture sites, and areas of vulnerability across New York City. Spatial analysis reveals how food accessibility correlates with infrastructure, demographics, and land use patterns.</p>
     </section>
 
-    <section>
-      <h2>Data Processing</h2>
+    <section id="data" class="block reveal">
+      <h2>Data Sources & Processing</h2>
       <ul>
-        <li>Public health and nutrition datasets</li>
-        <li>Urban land use and zoning data</li>
-        <li>Transportation and infrastructure networks</li>
-        <li>Socioeconomic indicators by neighborhood</li>
-        <li>Supply chain and distribution data</li>
+        <li>NYC Department of Health nutrition and food access data</li>
+        <li>USDA Food Access Research Atlas</li>
+        <li>NYC Planning Department land use and zoning data</li>
+        <li>MTA transit network and connectivity analysis</li>
+        <li>Socioeconomic indicators by neighborhood and block group</li>
+        <li>Supply chain and distribution infrastructure inventory</li>
       </ul>
     </section>
 
-    <section>
-      <h2>Modeling & Computation</h2>
-      <p>Integration of multiple data sources to create vulnerability indices and resilience metrics. Computational modeling identifies patterns and opportunities for intervention.</p>
+    <section id="modeling" class="block reveal">
+      <h2>Computational Modeling</h2>
+      <p>Integration of multiple data sources creates vulnerability indices that combine food access, transportation connectivity, and socioeconomic factors. Computational models identify patterns, gaps, and opportunities for intervention across the city.</p>
     </section>
-  </main>
 
-  <footer class="footer">
-    <p>&copy; 2025 Urban Food Resilience Atlas. A thesis research project.</p>
-  </footer>
+    <button id="toTop" class="to-top" type="button">↑ Top</button>
+  </main>
 
   <script src="js/main.js"></script>
   <script src="js/page.js"></script>
