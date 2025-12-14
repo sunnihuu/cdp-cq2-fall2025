@@ -25,8 +25,158 @@ if (btn) {
 let cyan, magenta, yellow, black;
 let initialized = false;
 
-// Particle class
-class Grain {
+// CMYK colors
+let cyan, magenta, yellow, black;
+let initialized = false;
+
+/**
+ * Helper: Convert RGB to CMYK
+ */
+function RGBtoCMYK(r, g, b) {
+  let r1 = r / 255;
+  let g1 = g / 255;
+  let b1 = b / 255;
+  let c, m, y, k;
+  k = Math.min(1 - r1, 1 - g1, 1 - b1);
+  if (k == 1) {
+    c = m = y = 0;
+  } else {
+    c = (1 - r1 - k) / (1 - k);
+    m = (1 - g1 - k) / (1 - k);
+    y = (1 - b1 - k) / (1 - k);
+  }
+  return [c, m, y, k];
+}
+
+/**
+ * Helper: Convert CMYK values to spot sizes
+ */
+function CMYKtoSpotSize(c, m, y, k, spotSize) {
+  let cs = c * spotSize;
+  let ms = m * spotSize;
+  let ys = y * spotSize;
+  let ks = k * spotSize;
+  return [cs, ms, ys, ks];
+}
+
+/**
+ * Create random color palette
+ */
+function createColorPalette() {
+  cyan = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+  magenta = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+  yellow = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+  black = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+}
+
+/**
+ * Create base graphics with random circles
+ */
+function createBaseGraphics(w, h) {
+  const tempCanvas = document.createElement('canvas');
+  tempCanvas.width = w;
+  tempCanvas.height = h;
+  const tempCtx = tempCanvas.getContext('2d');
+  
+  // Draw random circles
+  for (let i = 0; i < 100; i++) {
+    let radius = 70 + Math.random() * 30; // random(70, 100)
+    tempCtx.fillStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+    tempCtx.beginPath();
+    tempCtx.arc(Math.random() * w, Math.random() * h, radius, 0, Math.PI * 2);
+    tempCtx.fill();
+  }
+  
+  return tempCanvas;
+}
+
+/**
+ * Initialize halftone pattern
+ */
+function initHalftone() {
+  if (!canvas || !ctx) return;
+  
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  canvas.width = w;
+  canvas.height = h;
+  
+  // Create color palette
+  createColorPalette();
+  
+  // Create base graphics
+  const baseGraphics = createBaseGraphics(w, h);
+  const baseCtx = baseGraphics.getContext('2d');
+  
+  // Background
+  ctx.fillStyle = '#e6e6e6';
+  ctx.fillRect(0, 0, w, h);
+  
+  // CMYK halftone effect
+  const diff = 8;
+  const spotamp = 20 + Math.random() * 20; // random(20, 40)
+  
+  ctx.globalCompositeOperation = 'multiply';
+  
+  for (let Y = 50; Y < h - 50; Y += 20) {
+    for (let X = 50; X < w - 50; X += 20) {
+      // Get pixel color from base graphics
+      const imageData = baseCtx.getImageData(X, Y, 1, 1);
+      const [r, g, b] = imageData.data;
+      
+      // Convert to CMYK
+      const thisCMYK = RGBtoCMYK(r, g, b);
+      const spotSizes = CMYKtoSpotSize(...thisCMYK, spotamp);
+      
+      // Draw CMYK dots
+      ctx.fillStyle = black;
+      ctx.beginPath();
+      ctx.arc(X, Y - diff, spotSizes[3], 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.fillStyle = cyan;
+      ctx.beginPath();
+      ctx.arc(X - diff, Y, spotSizes[0], 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.fillStyle = magenta;
+      ctx.beginPath();
+      ctx.arc(X, Y + diff, spotSizes[1], 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.fillStyle = yellow;
+      ctx.beginPath();
+      ctx.arc(X + diff, Y, spotSizes[2], 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  
+  initialized = true;
+}
+
+/**
+ * Main draw loop (static pattern)
+ */
+function draw() {
+  if (!initialized) {
+    initHalftone();
+  }
+  // Pattern is static, no animation needed
+}
+
+/**
+ * Handle window resize
+ */
+function handleResize() {
+  initialized = false;
+  draw();
+}
+
+// Initialize
+if (canvas) {
+  window.addEventListener('resize', handleResize);
+  draw();
+}
   constructor(x, y) {
     this.pos = { x, y };
     this.target = { x, y };
