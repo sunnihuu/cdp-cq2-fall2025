@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Overview - Low Foodprint NYC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body class="home">
+  <!-- Three.js background container -->
+  <div id="three-container"></div>
+
+  <!-- Floating icons container (empty for Overview) -->
+  <div id="floating-icons-container"></div>
+
+  <main class="home-shell" aria-label="Project Overview">
+    <!-- Header: Title top-left copied from home page -->
+    <header class="header">
+      <h1 class="title"><a href="index.html">Project Overview</a></h1>
+    </header>
+
+    <!-- Top right: Navigation consistent with home -->
+    <nav class="nav-top-right">
+      <button id="toggle-scale" class="nav-link" style="appearance:none;">Scale</button>
+      <a href="index.html" class="nav-link">Home</a>
+    </nav>
+
+    <!-- Bottom left: Name (copied from home) -->
+    <div class="info-bottom-left">
+      <p class="info-text">Sunni Hu</p>
+    </div>
+
+    <!-- Bottom right: Credits (copied from home) -->
+    <footer class="info-bottom-right">
+      <p class="info-text">Columbia University GSAPP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computational Design Practice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colloquium 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fall 2025</p>
+    </footer>
+
+    <!-- Center: Hypothesis text -->
+    <section style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align:left; z-index: 15; width: 90vw; max-width: none; padding: 0 32px; pointer-events: none;">
+      <div style="text-align:left; margin:0 auto; font-size: clamp(12px, 1.2vw, 16px); line-height:1.75; color:#333; max-width: 700px; pointer-events: auto;">
+        <p style="margin:0 0 12px 0; color:#444;"><strong>What if everyday eating choices could become a visible, data-driven, and actionable lever for building urban food and climate resilience in New York City?</strong></p>
+        <p>New York City’s food system sits at the intersection of climate risk, social vulnerability, and everyday behavior. While food consumption significantly contributes to carbon emissions, food access and affordability are unevenly distributed across neighborhoods, often reinforcing existing inequalities. These challenges are typically addressed at policy or infrastructure scales, leaving individual behavior disconnected from systemic change.</p>
+        <p>This project investigates how everyday eating can become an entry point for urban climate resilience. By mapping food-related vulnerability (such as high consumption density, low household storage capacity, and poverty) across NYC, the project reveals where food systems are most fragile. It proposes a data-driven behavioral interface that translates urban food and climate data into actionable insights, enabling residents, communities, and institutions to make informed, low-carbon food choices that collectively support a more resilient urban food system.</p>
+      </div>
+    </section>
+
+    <!-- Interactive Path: Scope & Scale graph -->
+  </main>
+
+  <!-- Scripts: Use same background and page utilities -->
+  <script type="module" src="js/three-background.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <!-- Removed unused page.js and text-wrap.js for clarity -->
+  
+  <!-- Scale overlay canvas -->
+  <div id="scale-overlay" class="overlay" style="display:none;">
+    <div class="overlay-inner" id="scale-canvas" style="max-width: 860px; max-height: 85vh; overflow: auto; padding: 16px; background: rgba(255,255,255,0.9); border-radius: 12px;"></div>
+  </div>
+
+  <script src="js/scale-tree.js"></script>
+</body>
+</html>

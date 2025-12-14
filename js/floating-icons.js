@@ -1,7 +1,7 @@
 // Floating and rotating food icons animation
 
 const icons = [
-  { src: 'images/icons/Cherries.png', alt: 'Cherries', url: '#', title: 'Project Overview' },
+  { src: 'images/icons/Cherries.png', alt: 'Cherries', url: 'project-overview.html', title: 'Project Overview' },
   { src: 'images/icons/Pear.png', alt: 'Pear', url: '#', title: 'Conceptual Framework' },
   { src: 'images/icons/Broccoli.png', alt: 'Broccoli', url: '#', title: 'Project Methods' },
   { src: 'images/icons/Apple.png', alt: 'Apple', url: '#', title: 'Proof of Concept' },

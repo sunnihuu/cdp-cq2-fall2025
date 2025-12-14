@@ -47,9 +47,10 @@ function init() {
   lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
 
   parentTransform = new THREE.Object3D();
-  parentTransform.position.x = Math.random() * 40 - 20;
-  parentTransform.position.y = Math.random() * 40 - 20;
-  parentTransform.position.z = Math.random() * 40 - 20;
+  // Position the holograph cluster roughly middle-right and centered vertically
+  parentTransform.position.x = 60; // shift right
+  parentTransform.position.y = 0;  // center vertically
+  parentTransform.position.z = -20; // slight depth to avoid overlap
 
   parentTransform.rotation.x = Math.random() * 2 * Math.PI;
   parentTransform.rotation.y = Math.random() * 2 * Math.PI;
