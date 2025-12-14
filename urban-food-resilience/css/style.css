@@ -134,6 +134,8 @@ a {
   top: 32px;
   right: 32px;
   z-index: 20;
+  display: flex;
+  gap: 32px;
 }
 
 .nav-link {
@@ -141,14 +143,17 @@ a {
   font-weight: 500;
   color: var(--fg);
   text-decoration: none;
-  border-bottom: 1px solid var(--line);
-  transition: border-color 200ms ease, color 200ms ease;
-  padding-bottom: 2px;
+  border: 1px solid var(--line);
+  transition: border-color 200ms ease, color 200ms ease, background-color 200ms ease;
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
 }
 
 .nav-link:hover {
-  border-bottom: 1px solid var(--accent);
+  border: 1px solid var(--accent);
   color: var(--accent);
+  background-color: rgba(124, 179, 66, 0.05);
 }
 
 /* Bottom-left: Placeholder name */
@@ -171,10 +176,19 @@ a {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
   color: #999;
   margin: 0;
   text-align: right;
+}
+
+.name-link {
+  color: #999;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.name-link:hover {
+  color: #000;
 }
 
 .info-bottom-left .info-text {
