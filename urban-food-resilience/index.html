@@ -1,66 +1,70 @@
-<!--
-Homepage for an academic thesis website.
-
-Goals:
-- Immediately communicate the research question
-- Treat food as infrastructure and climate system
-- Use one strong visual (map or diagram)
-- Avoid marketing language
--->
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Urban Food Resilience Atlas</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <h1 class="nav-title">Urban Food Resilience Atlas</h1>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="project.html">Project</a></li>
-        <li><a href="methods.html">Methods</a></li>
-        <li><a href="proof.html">Proof</a></li>
-        <li><a href="data.html">Data</a></li>
-        <li><a href="precedents.html">Precedents</a></li>
-        <li><a href="bibliography.html">Bibliography</a></li>
-      </ul>
-    </div>
-  </nav>
+<body class="home">
+  <!-- Background interactive layer -->
+  <canvas id="bg"></canvas>
 
-  <header class="site-header">
-    <h1>Urban Food Resilience Atlas</h1>
-    <p class="hypothesis">
-      What if everyday food consumption could become a visible, data-driven
-      tool for urban climate resilience?
-    </p>
-  </header>
+  <main class="home-shell" aria-label="Homepage">
+    <section class="home-center">
+      <!-- Title -->
+      <h1 class="title">
+        Urban Food Resilience Atlas
+      </h1>
 
-  <main>
-    <section class="hero">
-      <!-- Map or diagram image goes here -->
-      <div class="placeholder">[ Food Vulnerability Map ]</div>
-    </section>
-
-    <section class="intro">
-      <p>
-        This project examines how food consumption, carbon impact, and
-        neighborhood vulnerability intersect across New York City.
+      <!-- Hypothesis -->
+      <p class="hypothesis">
+        What if everyday food consumption could become a visible, data-driven tool for urban climate resilience
+        by connecting eating behavior to neighborhood vulnerability and carbon impact?
       </p>
+
+      <!-- Navigation buttons -->
+      <nav class="nav-grid" aria-label="Main navigation">
+        <a class="nav-btn" href="project.html">
+          <span class="nav-num">01</span>
+          <span class="nav-label">Project Description</span>
+        </a>
+
+        <a class="nav-btn" href="computation.html">
+          <span class="nav-num">02</span>
+          <span class="nav-label">Computational Methods</span>
+        </a>
+
+        <a class="nav-btn" href="design.html">
+          <span class="nav-num">03</span>
+          <span class="nav-label">Design Methods</span>
+        </a>
+
+        <a class="nav-btn" href="precedents.html">
+          <span class="nav-num">04</span>
+          <span class="nav-label">Precedents</span>
+        </a>
+
+        <a class="nav-btn" href="proof.html">
+          <span class="nav-num">05</span>
+          <span class="nav-label">Proof of Concept</span>
+        </a>
+
+        <a class="nav-btn" href="presentation.html">
+          <span class="nav-num">06</span>
+          <span class="nav-label">Presentation</span>
+        </a>
+      </nav>
+
+      <div class="home-meta">
+        <span>GSAPP · Colloquium · Review 3</span>
+        <button id="motionToggle" class="ghost-btn" type="button">Reduce Motion</button>
+      </div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2025 Urban Food Resilience Atlas. A thesis research project.</p>
-  </footer>
-
   <script src="js/main.js"></script>
+  <script src="js/page.js"></script>
 </body>
 </html>
