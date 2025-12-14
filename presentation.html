@@ -41,7 +41,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      z-index: 5;
+      z-index: 100;
     }
 
     .page-sidebar {
@@ -57,6 +57,7 @@
       justify-content: center;
       position: relative;
       perspective: 1000px;
+      z-index: 100;
     }
 
     #pdf-canvas {
@@ -71,7 +72,7 @@
       bottom: 32px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 20;
+      z-index: 200;
       display: flex;
       gap: 16px;
       align-items: center;
@@ -81,7 +82,7 @@
       position: fixed;
       bottom: 32px;
       left: 32px;
-      z-index: 20;
+      z-index: 200;
     }
 
     .home-btn {
@@ -198,14 +199,20 @@
     let currentPage = 1;
     let totalPages = 0;
 
+    console.log('PDF path:', pdfPath);
+
     // Load PDF
     async function loadPdf() {
       try {
+        console.log('Loading PDF from:', pdfPath);
         pdfDoc = await pdfjsLib.getDocument(pdfPath).promise;
         totalPages = pdfDoc.numPages;
+        console.log('PDF loaded successfully. Total pages:', totalPages);
+        document.getElementById('page-total').textContent = totalPages;
         renderPage(currentPage);
       } catch (error) {
         console.error('Error loading PDF:', error);
+        alert('Error loading PDF: ' + error.message);
       }
     }
 

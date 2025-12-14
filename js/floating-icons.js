@@ -70,10 +70,15 @@ function generateNonOverlappingPositions(count, viewportWidth, viewportHeight) {
 
 function initFloatingIcons() {
   const container = document.getElementById('floating-icons-container');
-  if (!container) return;
+  console.log('Initializing floating icons...', container);
+  if (!container) {
+    console.error('Container not found!');
+    return;
+  }
 
   // Generate non-overlapping positions
   const positions = generateNonOverlappingPositions(icons.length, window.innerWidth, window.innerHeight);
+  console.log('Generated positions:', positions);
 
   icons.forEach((icon, index) => {
     // Create anchor element
@@ -110,9 +115,13 @@ function initFloatingIcons() {
     link.style.setProperty('--float-delay', `${floatDelay}s`);
     link.style.setProperty('--icon-size', `${pos.size}px`);
     
+    console.log(`Created icon ${index}:`, icon.alt, pos);
+    
     // Make draggable
     makeDraggable(link);
   });
+  
+  console.log('Floating icons initialized!');
 }
 
 // Draggable functionality
@@ -166,8 +175,14 @@ function makeDraggable(element) {
 }
 
 // Initialize on page load
+console.log('floating-icons.js loaded');
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initFloatingIcons);
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded event fired');
+    initFloatingIcons();
+  });
 } else {
+  console.log('Document already loaded, initializing immediately');
   initFloatingIcons();
 }

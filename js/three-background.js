@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+console.log('three-background.js loaded');
+
 let container;
 let camera, scene, renderer, parentTransform;
 
@@ -11,7 +13,15 @@ let lineObjects = [];
 init();
 
 function init() {
+  console.log('Initializing Three.js background...');
+  
   container = document.getElementById('three-container');
+  console.log('Container:', container);
+  
+  if (!container) {
+    console.error('three-container not found!');
+    return;
+  }
 
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
 
@@ -95,6 +105,9 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setAnimationLoop(animate);
   container.appendChild(renderer.domElement);
+  
+  console.log('Three.js renderer created and added to container');
+  console.log('Renderer size:', window.innerWidth, 'x', window.innerHeight);
 
   document.addEventListener('pointermove', onPointerMove);
   window.addEventListener('resize', onWindowResize);
