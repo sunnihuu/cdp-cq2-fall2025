@@ -27,11 +27,6 @@
       width: 100%;
       height: 100%;
     }
-    
-    #design-methods-pack {
-      width: 100%;
-      height: 100%;
-    }
   </style>
 </head>
 
@@ -57,23 +52,6 @@
     <footer class="info-bottom-right">
       <p class="info-text">Columbia University GSAPP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computational Design Practice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colloquium 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fall 2025</p>
     </footer>
-
-    <div id="design-methods-pack"></div>
   </main>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script type="module">
-    import { renderDesignMethodsPack, designMethodsData } from './js/design-methods-pack.js';
-    
-    // Wait for DOM to be ready, then render
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        renderDesignMethodsPack('design-methods-pack', designMethodsData);
-      });
-    } else {
-      renderDesignMethodsPack('design-methods-pack', designMethodsData);
-    }
-  </script>
 </body>
 </html>
