@@ -229,3 +229,102 @@ Complements css/style.css with layout and interaction styles
     font-size: 0.95rem;
   }
 }
+
+/* ============================================
+   Precedents & References Page Styles
+   ============================================ */
+
+.page-content {
+  position: relative;
+  z-index: 15;
+  background: var(--bg);
+}
+
+/* Precedent card layout */
+.precedent {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.precedent:last-of-type {
+  border-bottom: none;
+}
+
+.precedent-image {
+  flex-shrink: 0;
+}
+
+.precedent-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  display: block;
+}
+
+.precedent-text h3 {
+  margin: 0 0 0.8rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.precedent-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.precedent-note {
+  margin: 2rem 0 0 0;
+  padding: 1.5rem;
+  background: rgba(124,179,66,0.05);
+  border-left: 3px solid var(--accent);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Bibliography */
+.bibliography-item {
+  margin-bottom: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.bibliography-item:last-of-type {
+  border-bottom: none;
+}
+
+.bib-entry {
+  margin: 0 0 0.35rem 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.bib-entry strong {
+  font-weight: 600;
+}
+
+.bib-entry em {
+  font-style: italic;
+}
+
+.bib-description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Responsive precedents */
+@media (max-width: 768px) {
+  .precedent {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+

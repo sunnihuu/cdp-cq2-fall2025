@@ -8,6 +8,207 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Proof of Concept: Minimal centered scrollable layout matching site style */
+    
+    body.poc-scroll {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .poc-shell {
+      position: relative;
+      z-index: 15;
+      width: 100%;
+      padding: 100px 32px 120px;
+    }
+
+    .poc-container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Section spacing and typography */
+    .poc-section {
+      margin-bottom: 4rem;
+    }
+
+    .poc-section h2 {
+      font-size: clamp(22px, 2.2vw, 28px);
+      font-weight: 700;
+      margin: 0 0 1.5rem 0;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+    }
+
+    .poc-section h3 {
+      font-size: clamp(16px, 1.5vw, 20px);
+      font-weight: 600;
+      margin: 1.5rem 0 0.8rem 0;
+      color: var(--fg);
+    }
+
+    .poc-section p {
+      font-size: clamp(13px, 1.1vw, 15px);
+      line-height: 1.7;
+      color: #333;
+      margin: 0 0 1rem 0;
+    }
+
+    /* 2x2 Grid for vulnerability layers */
+    .poc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .poc-grid-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .poc-grid-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+
+    .poc-grid-item p {
+      margin: 0;
+      font-size: clamp(12px, 1vw, 14px);
+      color: #666;
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* Full-width image */
+    .poc-image-full {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      margin: 2rem 0 1.5rem 0;
+    }
+
+    /* Key findings list */
+    .poc-findings {
+      list-style: none;
+      margin: 1.2rem 0 0 0;
+      padding: 0;
+    }
+
+    .poc-findings li {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: clamp(13px, 1.1vw, 15px);
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .poc-findings li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.2em;
+    }
+
+    /* Flow diagram */
+    .poc-flow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 2.5rem 0;
+      padding: 1.8rem;
+      background: rgba(124,179,66,0.08);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      gap: 0.8rem;
+    }
+
+    .poc-flow-item {
+      flex: 1;
+      text-align: center;
+      font-size: clamp(14px, 1.2vw, 16px);
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .poc-flow-item:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -1.2rem;
+      color: var(--accent);
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    /* Audience cards */
+    .poc-audience {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .poc-audience-card {
+      padding: 1.4rem;
+      background: rgba(124,179,66,0.08);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .poc-audience-card h4 {
+      margin: 0 0 0.6rem 0;
+      font-size: clamp(13px, 1.1vw, 15px);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--fg);
+    }
+
+    .poc-audience-card p {
+      margin: 0;
+      font-size: clamp(12px, 1vw, 14px);
+      line-height: 1.6;
+      color: #555;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .poc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .poc-audience {
+        grid-template-columns: 1fr;
+      }
+
+      .poc-flow {
+        flex-wrap: wrap;
+      }
+
+      .poc-flow-item:not(:last-child)::after {
+        content: "↓";
+        position: static;
+        display: block;
+        margin: 0.6rem 0;
+        right: auto;
+      }
+
+      .poc-shell {
+        padding: 100px 24px 100px;
+      }
+    }
+  </style>
   <script type="importmap">
     {
       "imports": {
@@ -18,7 +219,7 @@
   </script>
 </head>
 
-<body class="home">
+<body class="home poc-scroll">
   <!-- Three.js background container -->
   <div id="three-container"></div>
 
@@ -26,28 +227,121 @@
   <div id="floating-icons-container"></div>
 
   <main class="home-shell" aria-label="Proof of Concept">
-    <!-- Header: Title top-left -->
-    <header class="header">
+    <!-- Header: Title top-left (fixed) -->
+    <header class="header" style="position: fixed; top: 32px; left: 32px; z-index: 1000;">
       <h1 class="title"><a href="index.html">Proof of Concept</a></h1>
     </header>
 
-    <!-- Top right: Navigation -->
-    <nav class="nav-top-right">
+    <!-- Top right: Navigation (fixed) -->
+    <nav class="nav-top-right" style="position: fixed; top: 32px; right: 32px; z-index: 1000;">
       <a href="index.html" class="nav-link">Home</a>
     </nav>
 
-    <!-- Bottom left: Name -->
+    <!-- Bottom left: Name (fixed) -->
     <div class="info-bottom-left">
       <p class="info-text">Sunni Hu</p>
     </div>
 
-    <!-- Bottom right: Credits -->
+    <!-- Bottom right: Credits (fixed) -->
     <footer class="info-bottom-right">
       <p class="info-text">Columbia University GSAPP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computational Design Practice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colloquium 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fall 2025</p>
     </footer>
+
+    <!-- Scrollable content -->
+    <section class="poc-shell">
+      <div class="poc-container">
+    <section class="page-content">
+      <div class="page-top">
+        <a href="index.html" class="back">← Home</a>
+        <h1>Proof of Concept</h1>
+      </div>
+
+      <div class="page">
+        <!-- SECTION 1: Food Vulnerability Index -->
+        <div class="poc-section block">
+          <h2>Food Vulnerability Index</h2>
+          
+          <!-- 2x2 Grid of images -->
+          <div class="poc-grid">
+            <div class="poc-grid-item">
+              <img src="images/Poverty Map.png" alt="Poverty layer">
+              <p>Poverty</p>
+            </div>
+            <div class="poc-grid-item">
+              <img src="images/Consumption Proxy Map.png" alt="Consumption layer">
+              <p>Consumption</p>
+            </div>
+            <div class="poc-grid-item">
+              <img src="images/Household Storage Proxy Map.png" alt="Storage layer">
+              <p>Storage</p>
+            </div>
+            <div class="poc-grid-item">
+              <img src="images/Food Vulnerability Index – Composite Ma.png" alt="Composite Index">
+              <p>Composite Index</p>
+            </div>
+          </div>
+
+          <p>
+            The Food Vulnerability Index combines three urban conditions: economic pressure, food consumption intensity, and household food storage capacity. These layers were normalized and synthesized to identify neighborhoods where food stress is structurally concentrated. The index does not measure access alone, but the ability of neighborhoods to absorb disruption.
+          </p>
+        </div>
+
+        <!-- SECTION 2: Key Findings -->
+        <div class="poc-section block">
+          <h2>Key Findings</h2>
+          
+          <img src="images/Food Vulnerability Index – Composite Ma.png" alt="Composite vulnerability map with clusters highlighted" class="poc-image-full">
+          
+          <h3>Vulnerability Clusters</h3>
+          <ul class="poc-findings">
+            <li>Food vulnerability clusters in areas with high consumption, high poverty, and low storage.</li>
+            <li>These neighborhoods depend heavily on continuous food flows and delivery systems.</li>
+            <li>When disruption occurs, they are structurally more exposed to supply, price, and climate shocks.</li>
+          </ul>
+        </div>
+
+        <!-- SECTION 3: From Mapping to Behavior -->
+        <div class="poc-section block">
+          <h2>From Mapping to Behavior</h2>
+          
+          <div class="poc-flow">
+            <div class="poc-flow-item">Mapping</div>
+            <div class="poc-flow-item">Decision</div>
+            <div class="poc-flow-item">Behavior</div>
+            <div class="poc-flow-item">Risk</div>
+          </div>
+
+          <p>
+            Mapping is not the endpoint of this project. The goal is not only to show where vulnerability exists, but to identify where everyday decisions can intervene. Food risk is lived through daily behavior—shopping frequency, substitution, storage, and waste. These decision points become the operational entry points for design.
+          </p>
+        </div>
+
+        <!-- SECTION 4: Audience -->
+        <div class="poc-section block">
+          <h2>Audience</h2>
+          
+          <div class="poc-audience">
+            <div class="poc-audience-card">
+              <h4>Primary</h4>
+              <p>Residents in high-vulnerability neighborhoods</p>
+            </div>
+            <div class="poc-audience-card">
+              <h4>Secondary</h4>
+              <p>Community organizations and local food initiatives</p>
+            </div>
+            <div class="poc-audience-card">
+              <h4>Supporting</h4>
+              <p>Policy actors and planners</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- Scripts: Use same background and page utilities -->
+  <!-- Scripts: Use same background as other pages -->
   <script type="module" src="js/three-background.js"></script>
+  <script src="js/footer.js"></script>
 </body>
+</html>
 </html>

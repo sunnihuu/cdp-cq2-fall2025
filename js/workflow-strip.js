@@ -25,13 +25,7 @@ export function renderWorkflowStrip(containerId, workflowData){
     .attr("height", H)
     .attr("viewBox", [0,0,W,H])
     .style("max-width","100%")
-    .style("height","auto");
-
-  // background clickable to unpin
-  svg.append("rect")
-    .attr("x",0).attr("y",0).attr("width",W).attr("height",H)
-    .attr("fill","#fafaf9")
-    .attr("opacity", 1)
+    .style("height","auto")
     .on("click", () => {
       pinned = null;
       tooltip.style.display = "none";
@@ -124,15 +118,6 @@ export function renderWorkflowStrip(containerId, workflowData){
         showTooltip(evt,d);
       }
     });
-
-  // caption
-  svg.append("text")
-    .attr("x", W/2)
-    .attr("y", H - 10)
-    .attr("text-anchor","middle")
-    .attr("font-size", 10)
-    .attr("fill","#666")
-    .text("Hover or click a step to view details. Click empty space to close.");
 
   container.appendChild(svg.node());
 }

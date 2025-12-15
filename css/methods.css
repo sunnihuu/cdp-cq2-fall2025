@@ -54,10 +54,8 @@ body.methods-scrollable {
 }
 
 .chart-card {
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  background: transparent;
+  border: none;
   padding: 1.5rem;
   min-height: 320px;
   flex: 1;

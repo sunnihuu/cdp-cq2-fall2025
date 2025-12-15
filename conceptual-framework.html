@@ -18,30 +18,72 @@
   </script>
 </head>
 
-<body class="home">
+<body class="home page-scroll">
   <!-- Three.js background container -->
   <div id="three-container"></div>
 
   <!-- Floating icons container (empty for Conceptual Framework) -->
   <div id="floating-icons-container"></div>
 
-  <main class="home-shell" aria-label="Conceptual Framework">
+  <style>
+    /* Enable scroll on this page (override global hidden overflow) */
+    body.page-scroll { overflow-y: auto !important; }
+
+    /* Centered content shell */
+    .cf-shell { position: relative; z-index: 15; width: 100%; min-height: 100vh; padding: 100px 32px 140px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+    /* A. Core claim */
+    .core-claim { text-align: center; max-width: 980px; }
+    .core-claim h2 { margin: 0; font-size: clamp(22px, 3.4vw, 40px); font-weight: 700; letter-spacing: -0.01em; color: var(--fg); }
+    .core-claim p.sub { margin: 10px 0 0; color: #555; font-size: clamp(12px, 1.2vw, 16px); }
+    .core-claim p.copy { margin: 14px auto 0; color: #333; font-size: clamp(12px, 1.1vw, 15px); line-height: 1.7; max-width: 760px; }
+
+    /* B. Big diagram */
+    .concept-graphic { width: min(1100px, 92vw); height: min(78vh, 720px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; position: relative; z-index: 15; }
+    #concept-sankey { width: 100%; height: 100%; min-height: 420px; }
+    .chart-caption { margin: 0; font-size: 12px; color: #666; }
+
+    /* C. Bottom footnote */
+    .concept-footnote { width: min(980px, 92vw); margin: 8px 0 0; color: #444; font-size: clamp(11px, 1vw, 13px); line-height: 1.6; text-align: center; }
+  </style>
+
+  <main class="cf-shell" aria-label="Conceptual Framework">
     <!-- Header: Title top-left -->
-    <header class="header">
+    <header class="header" style="position: fixed; top: 32px; left: 32px; z-index: 1000;">
       <h1 class="title"><a href="index.html">Conceptual Framework</a></h1>
     </header>
 
     <!-- Top right: Navigation consistent with home -->
-    <nav class="nav-top-right">
+    <nav class="nav-top-right" style="position: fixed; top: 32px; right: 32px; z-index: 1000;">
       <a href="index.html" class="nav-link">Home</a>
     </nav>
 
-    <!-- Bottom left: Name (copied from home) -->
+    <!-- A. Core Claim -->
+    <section class="core-claim">
+      <h2>Food is not only consumption—it is climate infrastructure.</h2>
+      <p class="sub">It moves emissions, risk, and inequality through everyday urban systems.</p>
+      <p class="copy">
+        Food is not only a consumer good—it is climate infrastructure. Across production, processing, distribution, and retail, food systems move carbon, price signals, and risk through urban networks. Yet these infrastructures are unevenly accessible: storage capacity, affordability, and retail geographies make climate and food insecurity spatially patterned. This project frames the city as the critical scale where global food–climate dynamics become governable and where everyday choices can aggregate into systemic change.
+      </p>
+    </section>
+
+    <!-- B. Conceptual Sankey Diagram -->
+    <section class="concept-graphic">
+      <div id="concept-sankey" role="img" aria-label="Conceptual flow from systems to everyday levers"></div>
+      <p class="chart-caption">Food as climate infrastructure: how systemic flows translate into everyday levers.</p>
+    </section>
+
+    <!-- C. Minimal context footnote -->
+    <section class="concept-footnote">
+      <div>Project Drawdown: Food systems are central levers for climate solutions.</div>
+      <div>NYC context: NYC recognizes food–climate connections through policy and procurement, but neighborhood conditions remain unequal.</div>
+      <div>Why city scale: Cities are where global flows become governable and everyday behavior can aggregate into systemic change.</div>
+    </section>
+
+    <!-- Corner elements (fixed and unchanged) -->
     <div class="info-bottom-left">
       <p class="info-text">Sunni Hu</p>
     </div>
-
-    <!-- Bottom right: Credits (copied from home) -->
     <footer class="info-bottom-right">
       <p class="info-text">Columbia University GSAPP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computational Design Practice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colloquium 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fall 2025</p>
     </footer>
@@ -50,6 +92,7 @@
 
   <!-- Scripts: Use same background and page utilities -->
   <script type="module" src="js/three-background.js"></script>
+  <script type="module" src="js/conceptual-sankey-init.js"></script>
 
   <!-- Scale overlay canvas -->
   <div id="scale-overlay" class="overlay" style="display:none;">
