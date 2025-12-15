@@ -3,55 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Project Method - Low Foodprint NYC</title>
+  <title>Methods - Low Foodprint NYC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+  <link rel="stylesheet" href="css/methods.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
     }
-    
-    body {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background: white;
-      font-family: 'Lexend Deca', sans-serif;
-    }
-    
-    main {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
+  </script>
 </head>
 
-<body>
-  <main>
-    <!-- Header: Title top-left -->
-    <header class="header">
-      <h1 class="title">Project Method</h1>
-      <p class="subtitle">Click to focus. Press Esc or double-click<br>background to return.</p>
-    </header>
+<body class="home methods-scrollable">
+  <!-- Three.js background container -->
+  <div id="three-container"></div>
 
-    <!-- Top right: Home button -->
-    <nav class="nav-top-right">
-      <a href="index.html" class="nav-link">Home</a>
-    </nav>
+  <!-- Floating icons container (empty for Methods) -->
+  <div id="floating-icons-container"></div>
 
-    <!-- Bottom left: Name -->
+  <!-- Header: Title top-left (fixed) -->
+  <header class="header" style="position: fixed; top: 32px; left: 32px; z-index: 1000;">
+    <h1 class="title"><a href="index.html">Methods</a></h1>
+    <p class="subtitle">A method-driven workflow from spatial diagnosis to behavioral intervention.</p>
+  </header>
+
+  <!-- Top right: Home button (fixed) -->
+  <nav class="nav-top-right" style="position: fixed; top: 32px; right: 32px; z-index: 1000;">
+    <a href="index.html" class="nav-link">Home</a>
+  </nav>
+
+  <!-- Page 1: Computational Workflow -->
+  <section class="methods-page-section">
+    <div class="methods-shell">
+      <div class="methods-block">
+        <div class="block-head">
+          <h2>Computational Workflow</h2>
+          <p>From spatial synthesis to diagnostic targets.</p>
+        </div>
+        <div id="workflow-strip" class="chart-card"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page 2: Design Methods -->
+  <section class="methods-page-section">
+    <div class="methods-shell">
+      <div class="methods-block">
+        <div class="block-head">
+          <h2>Design Methods</h2>
+          <p>Organized from strategic stances to concrete practices.</p>
+        </div>
+        <div id="design-pack" class="chart-card"></div>
+      </div>
+    </div>
+
+    <!-- Bottom left: Name (on page 2) -->
     <div class="info-bottom-left">
       <p class="info-text">Sunni Hu</p>
     </div>
 
-    <!-- Bottom right: Credits -->
+    <!-- Bottom right: Credits (on page 2) -->
     <footer class="info-bottom-right">
       <p class="info-text">Columbia University GSAPP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computational Design Practice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colloquium 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fall 2025</p>
     </footer>
-  </main>
+  </section>
+
+  <!-- Scripts: Use same background as other pages -->
+  <script type="module" src="js/three-background.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script type="module" src="js/methods-init.js"></script>
 </body>
 </html>
