@@ -1,7 +1,7 @@
 // Design Methods Circle Packing Diagram - Academic Thesis Version
 // Optimized for visual hierarchy, label clarity, and zoom interaction
 
-const designMethodsData = {
+export const designMethodsData = {
   name: "Design Methods",
   value: 100,
   children: [
@@ -105,17 +105,17 @@ const designMethodsData = {
   ]
 };
 
-function renderDesignMethodsPack(containerId, data) {
+export function renderDesignMethodsPack(containerId, data) {
   const container = document.getElementById(containerId);
   if (!container) {
     console.error("Container not found:", containerId);
-    return;
+    return null;
   }
 
   // Configuration
   const width = container.clientWidth || 900;
   const height = container.clientHeight || 900;
-  const margin = 40;
+  const margin = 1; // Avoid clipping root circle stroke
   
   const colors = {
     background: "#fafaf9",
@@ -128,7 +128,17 @@ function renderDesignMethodsPack(containerId, data) {
     hover: "#e8e8e8"
   };
 
-  const labelThreshold = 20; // Minimum radius to show label
+  // Appearance + interaction config (centralized)
+  const cfg = {
+    transitionDur: 600,
+    transitionEase: d3.easeCubicInOut,
+    labelThreshold: 20,
+    coreStrokeBoost: 0.08,
+    speculativeOffsetScale: 0.08,
+    biasScale: 1.12
+  };
+
+  const labelThreshold = cfg.labelThreshold; // Minimum radius to show label
   
   // Helper: Determine if label should be visible (thesis safe - tight rules)
   function labelVisible(d, focus) {
@@ -142,24 +152,51 @@ function renderDesignMethodsPack(containerId, data) {
   }
 
   // Helper: Get circle opacity based on focus relationship
+  function isCoreCategory(node) {
+    return node.depth === 1 && (node.data.name === "Behavioral" || node.data.name === "Interface-driven");
+  }
+
+  // Helper: Nudge Speculative toward center slightly to avoid looking exiled
+  function getNodeOffset(node, rootNode) {
+    if (node.depth === 1 && node.data.name === "Speculative") {
+      const scale = 0.08; // move 8% toward center
+      const dx = (rootNode.x - node.x) * scale;
+      const dy = (rootNode.y - node.y) * scale;
+      return { dx, dy };
+    }
+    return { dx: 0, dy: 0 };
+  }
+
   function getCircleOpacity(node, focusNode, state = 'default') {
+    let result;
     if (state === 'hover-lineage') {
-      return { fill: 0.12, stroke: 0.35 };
+      result = { fill: 0.12, stroke: 0.35 };
+    } else if (state === 'hover-non-lineage') {
+      result = { fill: 0.05, stroke: 0.15 };
+    } else {
+      // Default state - check if node is focus or lineage
+      const isFocus = node === focusNode;
+      const isLineage = focusNode.ancestors().includes(node) || node.parent === focusNode || focusNode.parent === node;
+      
+      if (isFocus) {
+        result = { fill: 0.18, stroke: 0.6 };
+      } else if (isLineage) {
+        result = { fill: 0.12, stroke: 0.35 };
+      } else {
+        result = { fill: 0.05, stroke: 0.15 };
+      }
     }
-    if (state === 'hover-non-lineage') {
-      return { fill: 0.05, stroke: 0.15 };
+
+    // Initial view: make top-level categories more present (depth===1 when focus is root)
+    if (focusNode && focusNode.depth === 0 && node.depth === 1 && state === 'default') {
+      result = { fill: 0.12, stroke: 0.35 };
     }
-    // Default state - check if node is focus or lineage
-    const isFocus = node === focusNode;
-    const isLineage = node.parent === focusNode || focusNode.parent === node || node.ancestors().includes(focusNode);
-    
-    if (isFocus) {
-      return { fill: 0.18, stroke: 0.6 };
+
+    // Apply slight stroke emphasis for core categories (Behavioral, Interface-driven)
+    if (isCoreCategory(node)) {
+      result.stroke = Math.min(1, result.stroke + 0.08);
     }
-    if (isLineage) {
-      return { fill: 0.12, stroke: 0.35 };
-    }
-    return { fill: 0.05, stroke: 0.15 };
+    return result;
   }
 
   // Helper: Get label styling based on depth
@@ -246,18 +283,34 @@ function renderDesignMethodsPack(containerId, data) {
 
   // Create SVG
   const svg = d3
-    .select(container)
-    .append("svg")
+    .create("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("viewBox", [0, 0, width, height])
-    .style("background", colors.background)
-    .style("font-family", '"Lexend Deca", sans-serif');
+    .attr("viewBox", [-margin, -margin, width, height])
+    .attr("style", "width: 100%; height: auto; font-family: 'Lexend Deca', sans-serif;");
 
-  // Hierarchy
+  // Hierarchy with core category bias (Behavioral, Interface-driven)
+    const biasScale = cfg.biasScale; // scale factor for core categories
+
+  function markCoreBias(node) {
+    if (!node || !node.children) return;
+    node.children.forEach(child => {
+      const isCore = child.name === "Behavioral" || child.name === "Interface-driven";
+      if (isCore) {
+        (function markAll(n) {
+          n.biasCategory = true;
+          if (n.children) n.children.forEach(markAll);
+        })(child);
+      }
+    });
+  }
+
+  // Mark bias on data before building hierarchy
+  markCoreBias(data);
+
   const hierarchy = d3
     .hierarchy(data)
-    .sum(d => d.value)
+    .sum(d => (d && d.biasCategory ? d.value * biasScale : d.value))
     .sort((a, b) => b.value - a.value);
 
   // Pack layout
@@ -277,14 +330,26 @@ function renderDesignMethodsPack(containerId, data) {
     .attr("width", width)
     .attr("height", height)
     .attr("fill", colors.background)
-    .attr("opacity", 0)
+    .attr("opacity", 1)
+    .attr("cursor", "zoom-out")
     .attr("pointer-events", "all")
     .on("click", (event) => {
       event.stopPropagation();
       if (focus !== root) {
         zoom(root);
       }
+    })
+    .on("dblclick", (event) => {
+      event.stopPropagation();
+      zoom(root);
     });
+
+  // Keyboard support: Press Esc to return to root
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      zoom(root);
+    }
+  });
 
   // Groups
   const containerGroup = svg
@@ -297,7 +362,10 @@ function renderDesignMethodsPack(containerId, data) {
     .data(root.descendants().filter(d => d.parent))
     .join("g")
     .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
+    .attr("transform", d => {
+      const offset = getNodeOffset(d, root);
+      return `translate(${d.x + offset.dx},${d.y + offset.dy})`;
+    });
 
   // Render circles
   const circles = nodes
@@ -305,7 +373,7 @@ function renderDesignMethodsPack(containerId, data) {
     .attr("r", d => d.r)
     .attr("fill", d => getNodeColor(d, focus).fill)
     .attr("stroke", d => getNodeColor(d, focus).stroke)
-    .attr("stroke-width", d => d.depth === 1 ? 2.5 : 1.2)
+    .attr("stroke-width", d => d.depth === 1 ? 3.5 : 1.6)
     .attr("fill-opacity", d => {
       const opacity = getCircleOpacity(d, focus);
       return opacity.fill;
@@ -343,9 +411,8 @@ function renderDesignMethodsPack(containerId, data) {
   nodes
     .on("click", (event, d) => {
       event.stopPropagation();
-      if (d.children && d.children.length > 0) {
-        zoom(d);
-      }
+      // Center any clicked node (including leaves) and show its label
+      zoom(d);
     })
     .on("mouseenter", (event, d) => {
       const lineage = d.ancestors();
@@ -391,15 +458,28 @@ function renderDesignMethodsPack(containerId, data) {
   function zoomTo(v) {
     const k = (width - margin * 2) / v[2];
 
+    // Scale circle radii during zoom
+    circles
+      .transition()
+      .duration(cfg.transitionDur)
+      .ease(cfg.transitionEase)
+      .attr("r", d => d.r * k)
+      .attr("stroke-width", d => {
+        const base = d.depth === 1 ? 3.5 : 1.6;
+        const boost = d === focus ? (d.depth === 1 ? 1 : 0.6) : 0;
+        return base + boost;
+      });
+
     // Transform node groups (circles and labels move together)
     nodes
       .transition()
-      .duration(600)
-      .ease(d3.easeCubicInOut)
+      .duration(cfg.transitionDur)
+      .ease(cfg.transitionEase)
       .attr("transform", d => {
-        const x = (d.x - v[0]) * k;
-        const y = (d.y - v[1]) * k;
-        return `translate(${x},${y}) scale(${1})`;
+        const offset = getNodeOffset(d, root);
+        const x = (d.x + offset.dx - v[0]) * k + width / 2;
+        const y = (d.y + offset.dy - v[1]) * k + height / 2;
+        return `translate(${x},${y})`;
       });
 
     // Update label font sizes and visibility during zoom
@@ -409,6 +489,11 @@ function renderDesignMethodsPack(containerId, data) {
       .ease(d3.easeCubicInOut)
       .attr("font-size", d => {
         const displayRadius = d.r * k;
+        // Boost the focused node label for readability
+        if (d === focus) {
+          const boosted = Math.max(16, Math.min(28, displayRadius * 0.25));
+          return `${Math.round(boosted)}px`;
+        }
         if (d.depth === 1) {
           return displayRadius > labelThreshold * 1.5 ? "16px" : "14px";
         }
@@ -419,6 +504,7 @@ function renderDesignMethodsPack(containerId, data) {
         const visible = labelVisible(d, focus);
         return visible && displayRadius > labelThreshold ? 1 : 0;
       })
+      .attr("font-weight", d => (d === focus ? 700 : (d.depth === 1 ? 600 : 400)))
       .on("end", function(d) {
         // Re-wrap text after zoom with new sizes
         const displayRadius = d.r * k;
@@ -443,7 +529,12 @@ function renderDesignMethodsPack(containerId, data) {
           .attr("fill", color.fill)
           .attr("stroke", color.stroke)
           .attr("fill-opacity", opacity.fill)
-          .attr("stroke-opacity", opacity.stroke);
+          .attr("stroke-opacity", opacity.stroke)
+          .attr("stroke-width", () => {
+            const base = n.depth === 1 ? 3.5 : 1.6;
+            const boost = n === focus ? (n.depth === 1 ? 1 : 0.6) : 0;
+            return base + boost;
+          });
       });
     }, 650);
   }
@@ -454,31 +545,18 @@ function renderDesignMethodsPack(containerId, data) {
     zoomTo(view);
   }
 
-  // Add title
-  svg
-    .append("text")
-    .attr("x", width / 2)
-    .attr("y", 20)
-    .attr("text-anchor", "middle")
-    .attr("font-size", 16)
-    .attr("font-weight", 600)
-    .attr("fill", colors.text)
-    .text("Design Methods");
+  // Title and subtitle removed per request
 
-  // Add interaction hint
-  svg
-    .append("text")
-    .attr("x", width / 2)
-    .attr("y", height - 8)
-    .attr("text-anchor", "middle")
-    .attr("font-size", 9)
-    .attr("fill", colors.textMuted)
-    .text("Click circles to zoom | Click background to zoom out");
+  // Interaction hint removed; moved to page subtitle per request
 
   console.log("✓ Design Methods circle packing diagram (optimized) rendered");
+  
+  // Append to container and return node
+  container.appendChild(svg.node());
+  return svg.node();
 }
 
-// Auto-initialize with D3 ready check
+// Auto-initialize with D3 ready check (only for non-module usage)
 function initializeWhenReady() {
   if (typeof d3 === "undefined") {
     console.warn("D3 not loaded yet, retrying...");
@@ -498,8 +576,11 @@ function initializeWhenReady() {
   }, 100);
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeWhenReady);
-} else {
-  initializeWhenReady();
+// Auto-init on DOMContentLoaded if not in a module context
+if (typeof module === "undefined" || !module.exports) {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeWhenReady);
+  } else {
+    initializeWhenReady();
+  }
 }

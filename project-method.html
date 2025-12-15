@@ -8,30 +8,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-      }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-  </script>
+    
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: white;
+      font-family: 'Lexend Deca', sans-serif;
+    }
+    
+    main {
+      width: 100%;
+      height: 100%;
+    }
+    
+    #design-methods-pack {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 
-<body class="home">
-  <!-- Three.js background container -->
-  <div id="three-container"></div>
-
-  <!-- Floating icons container -->
-  <div id="floating-icons-container"></div>
-
-  <main class="home-shell" aria-label="Project Method">
+<body>
+  <main>
     <!-- Header: Title top-left -->
     <header class="header">
-      <h1 class="title"><a href="index.html">Project Method</a></h1>
+      <h1 class="title">Project Method</h1>
+      <p class="subtitle">Click to focus. Press Esc or double-click<br>background to return.</p>
     </header>
 
-    <!-- Top right: Navigation -->
+    <!-- Top right: Home button -->
     <nav class="nav-top-right">
       <a href="index.html" class="nav-link">Home</a>
     </nav>
@@ -46,13 +58,22 @@
       <p class="info-text">Columbia University GSAPP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computational Design Practice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colloquium 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fall 2025</p>
     </footer>
 
-    <!-- Design Methods Circle Packing Diagram -->
-    <div id="design-methods-pack" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85vw; height: 85vh; max-width: 900px; max-height: 900px; z-index: 15;"></div>
+    <div id="design-methods-pack"></div>
   </main>
 
-  <!-- Scripts: Use same background and page utilities -->
-  <script type="module" src="js/three-background.js"></script>
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="js/design-methods-pack.js"></script>
+  <script type="module">
+    import { renderDesignMethodsPack, designMethodsData } from './js/design-methods-pack.js';
+    
+    // Wait for DOM to be ready, then render
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        renderDesignMethodsPack('design-methods-pack', designMethodsData);
+      });
+    } else {
+      renderDesignMethodsPack('design-methods-pack', designMethodsData);
+    }
+  </script>
 </body>
 </html>
