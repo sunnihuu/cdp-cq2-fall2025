@@ -19,12 +19,24 @@
   </script>
 </head>
 
-<body class="home">
+<body class="home page-scroll">
   <!-- Three.js background container -->
   <div id="three-container"></div>
 
   <!-- Floating icons container (empty for Precedents) -->
   <div id="floating-icons-container"></div>
+
+  <style>
+    /* Enable scrolling for this page */
+    body.page-scroll { overflow-y: auto !important; }
+    body.page-scroll .home-shell { height: auto; min-height: 100vh; }
+    body.page-scroll .page-content { 
+      max-height: none; 
+      overflow-y: visible; 
+      padding-top: 120px;
+      padding-bottom: 100px;
+    }
+  </style>
 
   <main class="home-shell" aria-label="Precedents & References">
     <!-- Header: Title top-left -->
