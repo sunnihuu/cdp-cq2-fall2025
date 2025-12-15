@@ -2,7 +2,7 @@
 
 const icons = [
   { src: 'images/icons/Cherries.png', alt: 'Cherries', url: 'project-overview.html', title: 'Project Overview' },
-  { src: 'images/icons/Pear.png', alt: 'Pear', url: '#', title: 'Conceptual Framework' },
+  { src: 'images/icons/Pear.png', alt: 'Pear', url: 'conceptual-framework.html', title: 'Conceptual Framework' },
   { src: 'images/icons/Broccoli.png', alt: 'Broccoli', url: '#', title: 'Project Methods' },
   { src: 'images/icons/Apple.png', alt: 'Apple', url: '#', title: 'Proof of Concept' },
   { src: 'images/icons/Carrot.png', alt: 'Carrot', url: '#', title: 'Precedent & References' }
